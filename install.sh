@@ -8,8 +8,8 @@ fi
 
 curl https://nodejs.org/dist/v14.16.1/node-v14.16.1-linux-x64.tar.xz --output node-v14.16.1-linux-x64.tar.xz
 tar xf node-v14.16.1-linux-x64.tar.xz
-mv v14.16.1-linux-x64 node
-rm v14.16.1-linux-x64.tar.xz
+mv node-v14.16.1-linux-x64 node
+rm node-v14.16.1-linux-x64.tar.xz
 
 export PATH=$(realpath ./node/bin/):$PATH
 export NPM_CONFIG_PREFIX=$(realpath ./node/)
