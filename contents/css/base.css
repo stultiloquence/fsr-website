@@ -1,0 +1,567 @@
+/* Variables for all occurring colors, the --base-unit for distances and heading heights. */
+
+body {
+    /* colors */
+    --gruen1: #DADD84;
+    --gruen2: #B9CB53;
+    --gruen3: #4C6337;
+    --gruen4: #80A93A;
+    --gruen5: #fafaf0;
+    --gruen6: #a1bb6b;
+
+
+    /*--body-background-color: #FCFFB5;*/
+    --body-background-color: #f4f4f4;
+    --body-text-color: black;
+    --link-color: var(--gruen3);
+    --link-highlight-color: rgb(166, 185, 82);
+    
+    --nav-1-color: var(--gruen4);
+    --nav-2-color: var(--gruen2);
+    --nav-highlight: var(--gruen1);
+    --nav-highlight-section: var(--gruen6);
+    
+    --article-color: var(--gruen5);
+    --article-border-color: #ccc;
+    
+    --container-color: white;
+    --header-text-color: white;
+
+    --horizontal-rule-color: var(--gruen2);
+
+    background-color: var(--body-background-color);
+    color: var(--body-text-color);
+
+    /* --base-unit is exactly the height of one line. */   
+    --line-height: 1.4;
+    --base-unit: 1.4rem;
+    font-family: Arial;
+    line-height: var(--line-height);
+
+
+    /* Vertical sizes of h elements */
+    /* We specify these as variables so that individual elements (e. g. boxed articles) can knock their headings down. */
+    /* An h1 is 4.5 base units tall, including margins. */
+    --h1-font-size: 1.728rem;
+    --h1-margin-top: calc(1.5 * var(--base-unit));
+    --h1-margin-bottom: calc(1.272 * var(--base-unit));
+    
+    /* An h2 is 4 base-units tall, including margins. */
+    --h2-font-size: 1.4rem;
+    --h2-margin-top: calc(1.4 * var(--base-unit));
+    --h2-margin-bottom: calc(1.2 * var(--base-unit));
+    
+    /* An h3 is 3.5 base-units tall, including margins. */
+    --h3-font-size: 1.2rem;
+    --h3-margin-top: calc(1.3 * var(--base-unit));
+    --h3-margin-bottom: var(--base-unit);
+    
+    /* An h4 is 2.5 base-units tall, including margins. */
+    --h4-font-size: 1rem;
+    --h4-margin-top: calc(1 * var(--base-unit));
+    --h4-margin-bottom: calc(0.5 * var(--base-unit));
+
+
+    --bilderreihe-klein-image-height: 150px;
+    --bilderreihe-image-height: 300px;
+    
+    hyphens: auto;
+}
+
+
+/* Basic Layout */
+
+body {
+    margin: 0;
+    padding: 0 0 calc(3 * var(--base-unit)) 0;
+}
+
+#siteContainer {
+    margin: 0 auto;
+    background-color: var(--container-color);
+}
+
+
+
+/* .markdown:
+
+Styling for all html that is generated from markdown. Styles headings, paragraphs, lists, tables, images, etc. Especially the height of headings will probably be adjusted by individual sections. */
+
+/* Text */
+
+.markdown {
+    hyphens: auto;
+}
+
+.markdown > *:first-child {
+    margin-top: 0;
+}
+
+.markdown > *:last-child {
+    margin-bottom: 0;
+}
+
+.markdown p,
+.markdown li {
+    text-align: justify;
+}
+
+.markdown p {
+    margin: var(--base-unit) 0;
+}
+
+.markdown p,
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6,
+.markdown li {
+    /* For readability, lines of text should not be much longer than 80 characters. */
+    max-width: 35rem;
+}
+
+.markdown a {
+    color: var(--link-color);
+    text-decoration: underline solid var(--link-color);
+}
+
+.markdown a:hover {
+    color: var(--link-highlight-color);
+    text-decoration-color: var(--link-highlight-color);
+}
+
+
+.markdown h1 {
+    font-size: var(--h1-font-size);
+    margin: var(--h1-margin-top) 0 var(--h1-margin-bottom) 0;
+}
+
+.markdown h2 {
+    font-size: var(--h2-font-size);
+    margin: var(--h2-margin-top) 0 var(--h2-margin-bottom) 0;
+}
+
+.markdown h3 {
+    font-size: var(--h3-font-size);
+    margin: var(--h3-margin-top) 0 var(--h3-margin-bottom) 0;
+}
+
+.markdown h4 {
+    font-size: var(--h4-font-size);
+    margin: var(--h4-margin-top) 0 var(--h4-margin-bottom) 0;
+}
+
+/* horizontal rule <hr> */
+.markdown hr {
+    margin: calc(2 * var(--base-unit)) 0 calc(1.5 * var(--base-unit)) 0;
+    border: none;
+    border-top: 2px solid var(--horizontal-rule-color);
+    max-width: 35rem; /* same as max-width of p and h1–h6 */
+}
+
+/* Lists */
+.markdown ul,
+.markdown ol {
+    margin: var(--base-unit) 0;
+    padding: 0 0 0 calc(2 * var(--base-unit));
+}
+
+.markdown ul ul,
+.markdown ol ol {
+    margin: calc(0.5 * var(--base-unit)) 0em;
+}
+
+.markdown ul ul {
+    list-style: disc;
+}
+
+/* figures, images */
+
+.markdown figure {
+    text-align: center;
+}
+
+/* Single images shall fill the available width. */
+.markdown > figure {
+    margin: 0;
+}
+
+.markdown img {
+    display: block;
+    width: 90%;
+    margin: var(--base-unit) auto;
+}
+
+/* .bilderreihe arranges its children in a wrapping row. */
+.bilderreihe {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+
+}
+
+.bilderreihe > * {
+    flex: 0 1 auto;
+    margin: calc(0.5 * var(--base-unit));
+}
+
+.bilderreihe figure img {
+    width: unset;
+    height: var(--bilderreihe-image-height);
+    margin: 0 auto calc(0.5 * var(--base-unit)) auto;
+}
+
+.bilderreihe.klein figure img {
+    height: var(--bilderreihe-klein-image-height);
+}
+
+
+
+/* tables */
+
+.markdown .scroll-container {
+    overflow-x: auto;
+    margin: var(--base-unit);
+}
+
+@media (max-width: 60rem) {
+    .markdown .scroll-container {
+        margin: var(--base-unit) 0;
+    }
+}
+
+.markdown table {
+    margin: 0;
+    max-width: 90%;
+    overflow-x: scroll;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.markdown thead {
+    border-bottom: 1px black solid;
+}
+
+.markdown th,
+.markdown td {
+    margin: 0;
+    padding: calc(0.5 * var(--base-unit));
+    font-weight: normal;
+}
+
+.markdown thead tr:first-child th,
+.markdown thead tr:first-child td {
+    padding-top: 0;
+}
+
+.markdown tbody tr:last-child th,
+.markdown tbody tr:last-child td {
+    padding-bottom: 0;
+}
+
+.markdown thead th {
+    font-weight: bold;
+}
+
+/* left- and rightmost padding */
+.markdown th:first-child,
+.markdown td:first-child {
+    padding-left: calc(0.25 * var(--base-unit));
+}
+
+.markdown th:last-child,
+.markdown td:last-child {
+    padding-right: calc(0.25 * var(--base-unit));
+}
+
+
+
+/* SPECIAL ELEMENTS */
+
+
+
+/* Special tables */
+
+/* The .middle-centered class indicated that text in all columns should be centered. */
+.middle-centered  {
+    text-align: center;
+}
+
+/* The .first-left-aligned class indicated that text in the first column should be left aligned. */
+.first-left-aligned td:first-child,
+.first-left-aligned th:first-child {
+    text-align: left;
+}
+
+/* The .last-right-aligned class indicated that text in the last column should be right aligned. */
+.last-right-aligned td:last-child,
+.last-right-aligned th:last-child {
+    text-align: right;
+}
+
+/* special stundenplan table on the warm-up page */
+.stundenplan th,
+.stundenplan td {
+    padding: calc(0.3 * var(--base-unit));
+    border: 1px black solid;
+}
+
+
+
+
+
+/* #mainHeader */
+
+#mainHeader {
+    height: calc(7 * var(--base-unit));
+    background-image: url("../static/header.jpg");
+    background-color: var(--gruen3);
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mainHeader > h1 {
+    margin: 0 calc(0.5 * var(--base-unit));
+    max-width: unset;
+    font-size: 2rem;
+}
+
+#mainHeader > h1 > a {
+    color: var(--header-text-color);
+    /* For readability on the background image: */
+    text-shadow: black 0px 0px 1em, black 0px 0px 1em;
+    text-decoration: none;
+}
+
+#mainHeader > h1 > a:hover {
+    color: var(--header-text-color);
+    text-decoration: underline;
+}
+
+@media (min-width: 20rem) {
+    #mainHeader > h1 {
+        /* Interpolate between 2rem and 2.5rem; */
+        font-size: calc(2rem + (2.5 - 2) * (100vw - 20rem) / (50 - 20));
+    }
+}
+
+@media (min-width: 50rem) {
+    #mainHeader > h1 {
+        font-size: 2.5rem;
+    }
+}
+
+
+
+/* #navigation */
+
+/* Sticky scrolling. */
+
+#navigation {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 500;
+}
+
+/* remove unwanted default styles */
+
+#navigation ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+/* make .secondLevelNav pop up on hovering over firstLevelNav, don't show .noHoverSecondLevel */
+
+@media (hover: hover) and (min-width: 30rem) {
+    #navigation .firstLevelNav,
+    #navigation .noHoverSecondLevel {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    #navigation .firstLevelNav > li {
+        position: relative;
+    }
+
+    #navigation .secondLevelNav {
+        display: none;
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+
+        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    /* Selects the 5th, 6th, 7th, … Element */
+    #navigation li:nth-child(n+5) > .secondLevelNav {
+        left: unset;
+        right: 0;
+    }
+
+    #navigation .firstLevelNav > li:hover > .secondLevelNav {
+        display: flex;
+    }
+
+    /*#navigation .noHoverSecondLevel {
+        display: none;
+    }*/
+}
+
+@media (hover: none) or (max-width: 30rem) {
+    #navigation .secondLevelNav {
+        display: none;
+    }
+
+    #navigation .firstLevelNav,
+    #navigation .noHoverSecondLevel {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+@media (max-width: 30rem) {
+    /* The ::before pseudo-elements are arrows indicating scrollable content, the ::after elements cover them when one reaches the end. Not super clean but whatever. */
+    #navigation .firstLevelNav::before,
+    #navigation .noHoverSecondLevel::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        content: "⯈";
+        height: calc(var(--base-unit));
+        padding: calc(0.5 * var(--base-unit)) 0;
+        width: var(--base-unit);
+        text-align: center;
+
+        background-color: #fffb;
+    }
+    #navigation .noHoverSecondLevel::before {
+        top: calc(2 * var(--base-unit));
+    }
+
+    #navigation .firstLevelNav::after,
+    #navigation .noHoverSecondLevel::after {
+        content: "";
+        width: var(--base-unit);
+        height: calc(2 * var(--base-unit));
+        flex-shrink: 0;
+        z-index: 1500;
+        background-color: var(--nav-1-color);
+    }
+    #navigation .noHoverSecondLevel::after {
+        background-color: var(--nav-2-color);
+    }
+}
+
+
+
+/* child elements li, a */
+
+#navigation li {
+    display: block;
+    text-align: left;
+}
+
+#navigation li > a {
+    display: block;
+    width: 100%;
+    padding: calc(0.5 * var(--base-unit));
+    box-sizing: border-box;
+    white-space: nowrap;
+
+    color: var(--body-text-color);
+    text-decoration: none;
+}
+
+/* background colors */
+
+#navigation .firstLevelNav {
+    background-color: var(--nav-1-color);
+}
+
+#navigation .secondLevelNav,
+#navigation .noHoverSecondLevel {
+    background-color: var(--nav-2-color);
+}
+
+/* Set :hover/.current/.current-section background colors. */
+
+#navigation li > a:hover {
+    color: var(--body-text-color);
+    text-decoration: underline;
+    background-color: var(--nav-highlight);
+}
+
+#navigation a.current-section {
+    background-color: var(--nav-highlight-section);
+}
+
+#navigation a.current {
+    background-color: var(--nav-highlight);
+}
+
+
+
+
+/* .floatingButtons */
+
+.floatingButtons {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.floatingButton:first-child {
+    margin-left: calc(0.5 * var(--base-unit));
+}
+
+.floatingButton:last-child {
+    margin-right: calc(0.5 * var(--base-unit));
+}
+
+a.floatingButton {
+    padding: calc(0.4 * var(--base-unit));
+    margin: calc(0.5 * var(--base-unit)) calc(0.25 * var(--base-unit));
+    width: var(--base-unit);
+    height: var(--base-unit);
+
+    border-radius: calc(2 * var(--base-unit));
+    text-align: center;
+
+    border: 1px solid var(--article-border-color);
+    background-color: var(--article-color);
+    color: var(--body-text-color);
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+.floatingButton:hover {
+    background-color: var(--nav-2-color);
+    color: var(--body-text-color);
+}

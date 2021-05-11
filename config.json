@@ -1,0 +1,42 @@
+{
+  "output": "./build/",
+  "baseUrl": "/~fsr/",
+  "locals": {
+    "url": "https://www.mathematik.hu-berlin.de/~fsr/",
+    "name": "Fachschaft Mathematik HU Berlin",
+    "description": "Website der Fachschaft Mathematik der HU Berlin",
+    "defaultLanguage": "de"
+  },
+  "plugins": [
+    "./plugins/helpers.js",
+    "./node_modules/wintersmith-markdown-it/"
+  ],
+  "require": {
+    "_": "lodash",
+    "path": "path"
+  },
+  "pug": {
+    "pretty": true
+  },
+  "markdown-it": {
+    "settings": {
+      "html": true
+    },
+    "markdown-it-headinganchor": {
+      "addHeadingID": true,
+      "slugify": "function (str, md) { return str.replace(/[^a-zA-Z0-9]/ig, '-').toLowerCase(); }"
+    },
+    "markdown-it-link-attributes": [ {
+      "pattern": "^https?://",
+      "attrs": {
+        "target": "_blank",
+        "rel": "noreferrer noopener"
+      }
+    }, {
+      "pattern": ".*",
+      "attrs": {
+        "test": "ohhhh yes"
+      }
+    } ]
+  }
+}

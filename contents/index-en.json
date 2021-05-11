@@ -1,0 +1,24 @@
+{
+	"template": "startseite.pug",
+	"title": "Start",
+	"description": "Home Page of the Math Student Association of the Humboldt University of Berlin",
+
+	"language": "en", 
+
+	"aktuelleHinweise": "News",
+	"termine": "Calender",
+	"mo": "Mo",
+	"di": "Tu",
+	"mi": "We",
+	"do": "Th",
+	"fr": "Fr",
+	"sa": "Sa",
+	"so": "Su",
+	"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+	"schnellzugriff": "Quick Links",
+	"schnellzugriffErstis": "Freshmen Getting Started",
+	"schnellzugriffLetztesProtokoll": "Minutes from the Latest Student Association Meeting",
+	"schnellzugriffPruefungsvorbereitung": "Exam Preparation",
+	"schnellzugriffNachhilfe": "Nachhilfe",
+	"schnellzugriffStellenausschreibungen": "Job Vacancies"
+}

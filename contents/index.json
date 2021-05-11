@@ -1,0 +1,24 @@
+{
+	"template": "startseite.pug",
+	"title": "Start",
+	"description": "Startseite der Website der Fachschaft Mathematik der Humboldt-Universität zu Berlin",
+
+	"language": "de", 
+
+	"aktuelleHinweise": "Aktuelle Hinweise",
+	"termine": "Termine",
+	"mo": "Mo",
+	"di": "Di",
+	"mi": "Mi",
+	"do": "Do",
+	"fr": "Fr",
+	"sa": "Sa",
+	"so": "So",
+	"months": ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+	"schnellzugriff": "Schnellzugriff",
+	"schnellzugriffErstis": "Startseite für Erstis",
+	"schnellzugriffLetztesProtokoll": "Letztes Sitzungsprotokoll des FSR",
+	"schnellzugriffPruefungsvorbereitung": "Prüfungsvorbereitung",
+	"schnellzugriffNachhilfe": "Nachhilfe",
+	"schnellzugriffStellenausschreibungen": "Stellenausschreibungen"
+}

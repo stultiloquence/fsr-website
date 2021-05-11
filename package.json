@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "devDependencies": {
+    "lodash": "^4.17.15",
+    "markdown-it-headinganchor": "^1.3.0",
+    "markdown-it-link-attributes": "^3.0.0",
+    "wintersmith": "^2.5.0",
+    "wintersmith-markdown-it": "^0.1.1"
+  }
+}

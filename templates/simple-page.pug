@@ -1,0 +1,15 @@
+extends base
+
+block append styles
+  link(rel='stylesheet', href=env.helpers.relPath(page, contents.css['simple-page.css'].filename))
+
+block prepend title
+  | #{ page.title + ' – '}
+
+block content
+  main.markdown#content
+    != page.html
+
+block append floatingButtons
+  if page.html.length >= 2
+    a.floatingButton#scroll-up-button(href='#' ) ▲

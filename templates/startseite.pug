@@ -1,0 +1,116 @@
+extends base
+
+block append vars
+  - const minimaleWochenzahl = 4
+  - const maximaleWochenzahl = 20
+  - const idOfFile = (p) => path.posix.basename(p, '.html')
+
+block append styles
+  link(rel='stylesheet', href=env.helpers.relPath(page, contents.css['startseite.css'].filename))
+
+block content
+  main
+    section#aktuelles
+      h1!= page.metadata.aktuelleHinweise
+      - const hinweise = Object.values(contents['hinweise'])
+      //- Wir reversen die Reihenfolge der Hinweise, damit aktuelle oben stehen.
+      each hinweis in hinweise.reverse()
+        //- Wir zeigen nur Hinweise, die visible auf true/yes gesetzt haben.
+        if hinweis.metadata.visible
+          article.markdown.box
+            h1= hinweis.title
+            != hinweis.html
+    
+    section#termine
+      h1!= page.metadata.termine
+      - const heute = new Date();
+      - const aktuellerMontag = env.helpers.lastMondayAtMidnight(heute);
+      - const termine = _.filter(Object.values(contents['termine']), t => !t.metadata.nichtAnzeigen && t.date - aktuellerMontag > 0);
+      - let wochenOffset = 0;
+      - const ausgewaehlt = termine[0];
+      
+      div.verticalScrollContainer
+        table#terminkalender
+          thead: tr
+            th!= page.metadata.mo
+            th!= page.metadata.di
+            th!= page.metadata.mi
+            th!= page.metadata.do
+            th!= page.metadata.fr
+            th!= page.metadata.sa
+            th!= page.metadata.so
+          tbody 
+            //- Wir gehen alle Wochen anhand ihrer Montage durch, solange noch Termine nach 00:00:00 Uhr des aktuell betrachteten Montags liegen.
+            while ((wochenOffset < minimaleWochenzahl) || (_.some(termine, t => t.date - aktuellerMontag > 0) && (wochenOffset < maximaleWochenzahl)))
+              //- Alle Termine, deren letzter Montag derselbe ist wie der, den wir gerade betrachten, liegen in der aktuellen Woche.
+              - const termineDieseWoche = _.filter(termine, t => env.helpers.sameWeek(t.date, aktuellerMontag));
+              |
+              tr
+                each offset in [0, 1, 2, 3, 4, 5, 6]
+                  - const aktuellerTag = new Date(aktuellerMontag.getTime());
+                  - aktuellerTag.setDate(aktuellerTag.getDate() + offset);
+                  - const termineDiesenTag = _.filter(termineDieseWoche, t => env.helpers.sameDay(t.date, aktuellerTag))
+
+                  td(class= aktuellerTag.getMonth() % 2 === 0 ? 'evenMonth' : 'oddMonth')
+                    p.dayNumber= aktuellerTag.getDate()
+                    if aktuellerTag.getDate() === 1
+                      p.monthName!= page.metadata.months[aktuellerTag.getMonth()]
+                    each termin in termineDiesenTag
+                      a.terminKlein(
+                        data-termin-element-id= idOfFile(termin.filename),
+                        class= ausgewaehlt.filename === termin.filename ? 'ausgewaehlt' : '',
+                        href= '#' + idOfFile(termin.filename)
+                      )
+                        = termin.metadata.kurztitel
+              
+              //- Schließlich springen wir in Vorbereitung der nächsten Iteration zur nächsten Woche.
+              - aktuellerMontag.setDate(aktuellerMontag.getDate() + 7);
+              - wochenOffset += 1;
+      
+      //- Falls wir Termine anzeigen wollen, die mehr als 10 Wochen in der Zukunft liegen:
+      //- const termineInFernerZukunft = _.filter(termine, t => t.date - aktuellerMontag > 0)
+      //- if termineInFernerZukunft.length > 0
+      //-   section#inFernerZukunft
+      //-     h2 In ferner Zukunft
+      //-     each termin in termineInFernerZukunft
+      //-       p.terminKlein(data-termin-element-id= termin.filename, class= ausgewaehlt.filename === termin.filename ? 'ausgewaehlt' : '')
+      //-         = termin.date.toLocaleString('de-DE') + ": " + termin.metadata.title
+    
+      each termin in termine
+        article.box.markdown.terminGross(id= idOfFile(termin.filename))
+          h1= termin.title
+          time(datetime= termin.date.toISOString())= termin.date.toLocaleString('de-DE')
+          != termin.html
+      p#klickAufforderung Klicke auf einen Termin für genauere Informationen!
+
+  section#schnellzugriff
+    h1!= page.metadata.schnellzugriff
+    ul
+      li: a(href= "rund-ums-studium/tools/index.html") Tools fürs Homeoffice
+      li: a(href= "erstis/gettingstarted/index.html")!= page.metadata.schnellzugriffErstis
+      - const protokolle = contents['fachschaftsrat']['sitzungen'];
+      - const letztesProtokollKey = _.chain(protokolle).keys().filter(key => _.startsWith(_.lowerCase(key), 'fsr protokoll')).sort().last().value();
+      - const letztesProtokoll = protokolle[letztesProtokollKey];
+      if (letztesProtokoll)
+        li: a(href= letztesProtokoll.filepath.relative)!= page.metadata.schnellzugriffLetztesProtokoll
+      li: a(href= "rund-ums-studium/prüfungsvorbereitung/index.html")!= page.metadata.schnellzugriffPruefungsvorbereitung
+      li: a(href= "rund-ums-studium/stellen/index.html")!= page.metadata.schnellzugriffStellenausschreibungen
+
+  footer#kontakt.markdown
+    != contents['kontakt.md'].html
+
+block append scripts
+  script(type="text/javascript").
+    const terminRoot = document.getElementById('termine');
+    let ausgewaehltKlein = terminRoot.getElementsByClassName('terminKlein ausgewaehlt')[0];
+    
+    const clickHandler = (e) => {
+      ausgewaehltKlein.classList.remove('ausgewaehlt');
+      ausgewaehltKlein = e.target;
+      ausgewaehltKlein.classList.add('ausgewaehlt');
+    }
+
+    const termineKlein = terminRoot.getElementsByClassName('terminKlein');
+    for (let termin of termineKlein) {
+      termin.addEventListener('click', clickHandler);
+    }

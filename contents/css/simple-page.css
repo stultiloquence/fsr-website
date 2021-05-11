@@ -1,0 +1,39 @@
+/* Lavout */
+
+#siteContainer {
+    max-width: 60rem;
+}
+
+main {
+    max-width: 35rem;
+    padding: calc(2 * var(--base-unit)) var(--base-unit);
+    position: relative;
+    left: max(0rem, 0.333 * (100% - (35rem + 2 * var(--base-unit))));
+}
+
+main.markdown .bilderreihe,
+main.markdown .scroll-container {
+    width: calc(100% + max(0rem, 0.333 * (min(100vw, 60rem) - (35rem + 2 * var(--base-unit)))));
+}
+
+
+/* Headings: This makes titles the browser jumps to via <a href="#myTitle"> not disappear behind the fixed navigation elements. Taken from https://css-tricks.com/hash-tag-links-padding/. */
+#content h1::before,
+#content h2::before,
+#content h3::before,
+#content h4::before,
+#content h5::before,
+#content h6::before {
+    display: block; 
+    content: " "; 
+    margin-top: calc(-5 * var(--base-unit)); /* 5 --base-units is always more than the height of the navigation (which is either 2 or 4). */
+    height: calc(5 * var(--base-unit)); 
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#content h1:target,
+#content h2:target,
+#content h3:target {
+    color: var(--nav-level-1-color);
+}

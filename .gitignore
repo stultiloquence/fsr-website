@@ -1,0 +1,12 @@
+/build
+/contents/**
+!/contents/css/
+!/contents/css/**
+!/contents/index*
+!/contents/kontakt.md
+
+node_modules/
+/node/
+
+*.sublime-workspace
+*.sublime-project

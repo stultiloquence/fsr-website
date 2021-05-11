@@ -1,0 +1,92 @@
+doctype html
+block vars
+html(lang= page.metadata.language || defaultLanguage)
+  head
+    block head
+      meta(charset='utf-8')
+      meta(name='viewport', content='width=device-width,initial-scale=1.0')
+      title
+        block title
+          = locals.name
+      link(rel='alternate', href=locals.url+'/feed.xml', type='application/rss+xml', title=locals.description)
+      block styles
+        link(rel='stylesheet', href=env.helpers.relPath(page, contents.css['base.css'].filename))
+  body
+    div#siteContainer
+      header#mainHeader
+        h1: a(href= env.helpers.relPath(page, contents['index.json'].filename)) Fachschaft Mathematik HU Berlin
+
+      nav#navigation
+        ol.firstLevelNav
+          li
+            a(
+              href= env.helpers.relPath(page, contents['index.json'].filename)
+              class= page === contents['index.json'] ? 'current' : ''
+            )= contents['index.json'].title
+          |
+          each section in env.helpers.getSubsections(page, contents)
+            - let sectionIndex = env.helpers.getIndex(page, section)
+            if sectionIndex
+              li
+                a(
+                  href= env.helpers.relPath(page, sectionIndex.filename)
+                  class= page === sectionIndex ? 'current' : ''
+                  class= env.helpers.isAncestor(sectionIndex, page) ? 'current-section' : ''
+                )= sectionIndex.title
+                if env.helpers.hasSubsections(section)
+                  ol.secondLevelNav
+                    each subsection in env.helpers.getSubsections(page, section)
+                      - let subsectionIndex = env.helpers.getIndex(page, subsection)
+                      if subsectionIndex
+                        li
+                          a(
+                            href= env.helpers.relPath(page, subsectionIndex.filename)
+                            class= page === subsectionIndex ? 'current' : ''
+                          )= subsectionIndex.title
+                    - let additionalLevel2Entries = sectionIndex.metadata.additionalNavEntries || []
+                    each entry in additionalLevel2Entries
+                      li: a(
+                        href= entry.url
+                      )= entry.title
+          - let additionalLevel1Entries = contents['index.json'].metadata.additionalNavEntries || []
+          each entry in additionalLevel1Entries
+            li: a(
+              href= entry.url
+            )= entry.title
+        - const ancestors = env.helpers.ancestors(page);
+        if ancestors.length >= 2 /* i. e. we are not on the start page */
+          - let section = ancestors[1];
+          - let sectionIndex = env.helpers.getIndex(page, section);
+          ol.noHoverSecondLevel
+            each subsection in env.helpers.getSubsections(page, section)
+              - let subsectionIndex = env.helpers.getIndex(page, subsection)
+              if subsectionIndex
+                li
+                  a(
+                    href= env.helpers.relPath(page, subsectionIndex.filename)
+                    class= page === subsectionIndex ? 'current' : ''
+                  )= subsectionIndex.title
+            - let additionalLevel2Entries = sectionIndex.metadata.additionalNavEntries || []
+            each entry in additionalLevel2Entries
+              li: a(
+                href= entry.url
+              )= entry.title
+
+  
+      block content
+    
+      section.floatingButtons
+        block floatingButtons
+          - const altLanguage = env.helpers.getAltLanguage(page);
+          - const altPage = env.helpers.getAltLanguagePage(page);
+          if altPage
+            a(
+              href= env.helpers.relPath(page, altPage.filename)
+              class= 'floatingButton'
+            )
+              if altLanguage === 'de'
+                | 🇩🇪
+              else
+                | 🇬🇧
+
+      block scripts
