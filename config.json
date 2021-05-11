@@ -1,6 +1,6 @@
 {
   "output": "./build/",
-  "baseUrl": "/~fsr/",
+  "baseUrl": "/",
   "locals": {
     "url": "https://www.mathematik.hu-berlin.de/~fsr/",
     "name": "Fachschaft Mathematik HU Berlin",
