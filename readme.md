@@ -1,54 +1,49 @@
 # Readme: Wie man diese Website benutzt.
 
-- kurze title
+Es zwei Abschnitte in diesem Readme:
 
-Hallo! Du möchtest also mit dieser Website interagieren. Je nachdem, was du machen möchtest, gibt es zwei verschiedene Abschnitte in diesem Readme:
-
-- **Für Nutzer:** Du möchtest neue Inhalte (Texte, Bilder, Termine, Aktuelle Hinweise, …) hinzufügen, bestehende Inhalte editieren, neue Unterseiten erstellen, also kurz, du möchtest vom Website-Autor (ich, hi :)) vorgesehene Dinge tun.
-- **Für Entwickler:** Du möchtest verstehen, wie die Website funktioniert, möchtest das Styling oder die Struktur signifikant ändern, alles über den Haufen werfen oder musst einen Bug fixen, den ich eingebaut habe (sorry).
+- Siehe **Für Nutzer** um Seiten (Texte, Bilder, Termine, Aktuelle Hinweise, …) hinzuzufügen oder zu ändern.
+- Siehe **Für Entwickler** um zu verstehen, wie die Website funktioniert und wie man tiefgreifendere Änderungen umsetzt.
 
 ## Für Nutzer
 
-### Verzeichnisstruktur: Der Contents-Ordner
+### Überblick über den contents-Ordner
 
-Die Website funktioniert so: Im `contents`-Ordner liegen Texte, Bilder und ähnliches (_Inhalte_ halt). Dort kannst du neue Dateien erstellen, bestehende ändern oder löschen. Dann führst du in einem Terminal im Website-Ordner `wintersmith build` aus, und das sorgt dafür, dass alles richtig zusammengestellt und hoffentlich funktionstüchtig im `public_html`-Ordner landet. Du solltest nie etwas direkt im `public_html`-Ordner ändern, denn das `wintersmith build`-Kommando überschreibt dort alles. Stattdessen musst du eigentlich nur im `contents`-Ordner arbeiten. (Die Website wird also „kompiliert“, so wie bei Programmiersprachen oder so. Statt _Compiler_ heißt es bei Websiten dann _Static Site Generator_, und der, den wir benutzen, heißt wintersmith. Die meisten anderen Dateien, die neben dem `contents`-Ordner liegen (`config.json`, `plugins`, `templates`, `package.json` und so), sind dafür da, `wintersmith` zu konfigurieren. Aber das kann dir eigentlich egal sein.)
+Du solltest/musst nur im `contents`-Ordner arbeiten. Dort liegen Texte, Bilder und ähnliches (_Inhalte_ halt), die du erstellen, ändern oder löschen kannst. Dann führst du in einem Terminal im Website-Ordner `./build.sh` aus, und das sorgt dafür, dass alles richtig zusammengestellt und hoffentlich funktionstüchtig im `public_html`-Ordner landet.
+
+(Du solltest nie etwas direkt im `public_html`-Ordner ändern, denn das `./build.sh`-Kommando überschreibt dort alles. Und ändere bitte auch nichts in diesem Ordner außerhalb von `contents`.)
 
 ```
-├── config.json                  <- Konfiguration für das wintersmith-Kommando
-├── contents
-│   ├── index.md
-│   ├── archive.json
-│   ├── erstis                   <– Abschnitt
-│   |   ├── index.md             <– Text und Metadaten auf der Hauptseite des Abschnitts
-│   │   ├── fakultative-übungen  <– Einzelner Artikel
-│   │   │   └── index.md         <– Text und Metadaten
-│   │   ├── faq
-│   │   │   └── index.md
-│   │   ├── warmup
-│   │   │   ├── index.md
-│   │   │   ├── Beweise_HA.pdf
-│   │   │   ├── Beweise_Vorlesung.pdf
-│   │   │   └── …
+contents
+├── index.json
+├── index-en.json
+├── kontakte.md
+├── erstis                   <– Abschnitt
+|   ├── index.md             <– Text und Metadaten auf der Hauptseite des Abschnitts
+|   ├── index-en.md          <– Optionale englische Version
+│   ├── fakultative-übungen  <– Einzelner Artikel
+│   │   └── index.md         <– Text und Metadaten
+│   ├── faq
+│   │   └── index.md
+│   ├── warmup
+│   │   ├── index.md
+│   │   ├── Beweise_HA.pdf
+│   │   ├── Beweise_Vorlesung.pdf
 │   │   └── …
-│   ├── fachschaftsrat           <– Abschnitt
-│   ├── …                        <– Weitere Abschnitte
-│   ├── css
-│   │   └── …
-│   └── feed.json
-├── plugins
-│   └── helpers.js      <- Hilfsfunktionen
-├── templates
-│   ├── base.pug
-│   ├── startseite.pug
-│   └── simple-page.pug
-└── 
+│   └── …
+├── fachschaftsrat           <– Abschnitt
+├── …                        <– Weitere Abschnitte
+├── aktuelles                   
+├── termine                   
+├── static                   
+└── css                      <- Ignorieren.
 ```
 
 Die Dateistruktur im `contents`-Ordner spiegelt die der Website, die am Ende rauskommt. Gehen wir die verschiedenen Ordner durch:
 
-- `erstis`, `fachschaftsrat`, `rund-ums-studium`, … (alle Ordner, die eine `index.md` und eventuell Unterordner mit weiteren `index.md`-Dateien enthalten): Hieraus werden die eigentlichen Seiten der Website. Aus Pfaden wie `/erstis/warmup/index.md` wird `/erstis/warmup/index.html`, auch unter `/erstis/warmup/` zu erreichen. Für jede der Hauptkategorien („Erstis”, „Fachschaftsrat“, …), die im Hauptmenü angezeigt werden, gibt es einen Ordner mit einer `index.md` für die „Startseite“ der jeweiligen Kategorie. Für jede Seite in den Kateogorien einen Unterordner. Der eigentliche Text jeder Seite liegt dann in der `ìndex.md`-Datei in diesem Ordner. Andere Inhalte, die auf der jeweiligen Seite angezeigt oder verlinkt werden sollen (sogenannte _Assets_, hauptsächlich Bilder und PDFs) sollten immer neben der entsprechenden `index.md`-Datei liegen (siehe zum Beispiel all die Protokolle in `/fachschaftsrat/sitzungen/`).
-- `static`: Inhalte wie PDFs oder Bilder, die auf mehreren Seiten verlinkt/angezeigt werden, sollten in diesem Ordner liegen.
+- `erstis`, `fachschaftsrat`, `rund-ums-studium`, … (alle Ordner, die eine `index.md` und eventuell Unterordner mit weiteren `index.md`-Dateien enthalten): Hieraus werden die eigentlichen Seiten der Website. Aus Pfaden wie `/erstis/warmup/index.md` wird `/erstis/warmup/index.html`, auch unter `/erstis/warmup/` zu erreichen. Für jede der Hauptkategorien („Erstis”, „Fachschaftsrat“, …), die im Hauptmenü angezeigt werden, gibt es einen Ordner mit einer `index.md` für die „Startseite“ der jeweiligen Kategorie. Für jede Seite in den Kategorien gibt es einen Unterordner. Der eigentliche Text jeder Seite liegt dann in der `ìndex.md`-Datei in diesem Ordner. Andere Inhalte, die auf der jeweiligen Seite angezeigt oder verlinkt werden sollen (Bilder, PDFs, …) sollten immer neben der entsprechenden `index.md`-Datei liegen (siehe zum Beispiel all die Protokolle in `/fachschaftsrat/sitzungen/`).
 - `termine` und `aktuelles`: Die hier enthaltenen `.md`-Dateien werden nicht selbst zu Seiten, sondern werden (zu Teilen) auf der Hauptseite in Boxen unter „Aktuelle Hinweise“ bzw. unter „Termine“ im Kalender angezeigt.
+- `static`: Inhalte wie PDFs oder Bilder, die auf mehreren Seiten verlinkt/angezeigt werden, sollten in diesem Ordner liegen.
 - `css` Hier liegen Dateien, die für das Aussehen der Website verantwortlich sind, und du kannst sie ignorieren.
 
 Im folgenden steht genauer beschrieben, wie man die einzelnen Dateien modifizieren kann und sollte: Die `index.md`-Dateien, aktuelle Hinweise, Termine und die Startseite.
@@ -78,13 +73,12 @@ Wie dir vielleicht auffällt, fängt jede `.md`-Datei mit einem Abschnitt an, de
 
 #### Der Text (Markdown)
 
-Unter den Metadaten steht der Text in einem bestimmten Format, nämlich [Markdown](https://de.wikipedia.org/wiki/Markdown) (daher `.md`), ein weit verbreitetes, super simples Format zur Auszeichnung von Texten. (Browser verstehen das nicht direkt, sondern verstehen nur HTML, und dafür ist der Static Site Generator da: Er übersetzt diese Dateien in HTML, sodass du kein HTML schreiben brauchst.) In Markdown kann man Überschriften und Subüberschriften, besonders betonten Text (kursiv und fett), Links, nummerierte und unnummerierte Listen und Bilder einfügen. Viel mehr geht nicht, aber das ist auch die Idee: Es soll simpel sein und nur das anbieten, das man braucht. Für die grundlegende, sehr einfache und gut lesbare Syntax google einfach „Markdown Tutorial“ oder guck dir den Wikipedia-Link oben an; das hier zu wiederholen wäre ein bisschen redundant. Diese Basics sollten für jeglichen normalen Text ausreichen.
+Unter den Metadaten steht der Text in einem bestimmten Format, nämlich [Markdown](https://de.wikipedia.org/wiki/Markdown) (daher `.md`), ein weit verbreitetes, super simples Format zur Auszeichnung von Texten. (Browser verstehen das nicht direkt, sondern verstehen nur HTML, und dafür ist der Static Site Generator da: Er übersetzt diese Dateien in HTML, sodass du kein HTML schreiben brauchst.) In Markdown kann man Überschriften und Subüberschriften, besonders betonten Text (kursiv und fett), Links, nummerierte und unnummerierte Listen und Bilder einfügen. Viel mehr geht nicht, aber das ist auch die Idee: Es soll simpel sein und nur das anbieten, das man braucht. Für die grundlegende, sehr einfache und gut lesbare Syntax google einfach „Markdown Tutorial“ oder guck dir den Wikipedia-Link oben an. Diese Basics sollten für jeglichen normalen Text ausreichen.
 
 ##### Wie man Texte schreiben sollte: Checkliste
 
-- Kurz und bündig! (Nicht so wie dieses Readme, ich kann das auch nicht …). Frag dich immer „Welche Informationen möchte ich kommunizieren?“ und „Warum gehen die Leute auf diese Website?“.
+- Kurz und bündig!
 - Statt „Informationen zu Blabla findest du [hier](https://example.org)“ lieber „Die HU veröffentlicht [Informationen zu Blabla](https://example.org).“
-- Nicht zu viel **fetter** und _kursiver_ Text.
 
 
 #### Links
@@ -232,4 +226,6 @@ Die `index.md`-Datei für die Startseite ist, bis auf Metadaten, überraschend l
 
 ## Für Entwickler
 
-… kommt!
+- das git Repo
+- installation
+- wintersmith build
