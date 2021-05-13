@@ -1,46 +1,28 @@
 /* Variables for all occurring colors, the --base-unit for distances and heading heights. */
 
 body {
-    /* colors */
-    --gruen1: #DADD84;
-    --gruen2: #B9CB53;
-    --gruen3: #4C6337;
-    --gruen4: #80A93A;
-    --gruen5: #fafaf0;
-    --gruen6: #a1bb6b;
+    /* greens */
+    --darker-green: #4c6337;
+    --darker-green-highlight: #a6b952;
+    --dark-green: #80a93a;
+    --dark-green-highlight: #a1bb6b;
+    --light-green: #b9cb53;
+    --light-green-highlight: #dadd84;
 
-
-    /*--body-background-color: #FCFFB5;*/
+    /* shades of grey */
     --body-background-color: #f4f4f4;
     --body-text-color: black;
-    --link-color: var(--gruen3);
-    --link-highlight-color: rgb(166, 185, 82);
-    
-    --nav-1-color: var(--gruen4);
-    --nav-2-color: var(--gruen2);
-    --nav-highlight: var(--gruen1);
-    --nav-highlight-section: var(--gruen6);
-    
-    --article-color: var(--gruen5);
+    --article-color: #fafaf0;
     --article-border-color: #ccc;
-    
     --container-color: white;
     --header-text-color: white;
-
-    --horizontal-rule-color: var(--gruen2);
-
-    background-color: var(--body-background-color);
-    color: var(--body-text-color);
-
-    /* --base-unit is exactly the height of one line. */   
-    --line-height: 1.4;
+    
+    /* base unit (= height of a normal line) */
     --base-unit: 1.4rem;
-    font-family: Arial;
-    line-height: var(--line-height);
-
 
     /* Vertical sizes of h elements */
     /* We specify these as variables so that individual elements (e. g. boxed articles) can knock their headings down. */
+
     /* An h1 is 4.5 base units tall, including margins. */
     --h1-font-size: 1.728rem;
     --h1-margin-top: calc(1.5 * var(--base-unit));
@@ -61,17 +43,28 @@ body {
     --h4-margin-top: calc(1 * var(--base-unit));
     --h4-margin-bottom: calc(0.5 * var(--base-unit));
 
-
+    /* sizes for .bilderreihe */
     --bilderreihe-klein-image-height: 150px;
     --bilderreihe-image-height: 300px;
-    
-    hyphens: auto;
 }
 
+
+
+/* Super basic text things */
+
+body {
+    hyphens: auto;
+
+    /* --base-unit is exactly the height of one line. */
+    font-family: Arial;
+    line-height: 1.4;
+}
 
 /* Basic Layout */
 
 body {
+    background-color: var(--body-background-color);
+    color: var(--body-text-color);
     margin: 0;
     padding: 0 0 calc(3 * var(--base-unit)) 0;
 }
@@ -123,15 +116,14 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 }
 
 .markdown a {
-    color: var(--link-color);
-    text-decoration: underline solid var(--link-color);
+    color: var(--darker-green);
+    text-decoration: underline solid var(--darker-green);
 }
 
 .markdown a:hover {
-    color: var(--link-highlight-color);
-    text-decoration-color: var(--link-highlight-color);
+    color: var(--darker-green-highlight);
+    text-decoration-color: var(--darker-green-highlight);
 }
-
 
 .markdown h1 {
     font-size: var(--h1-font-size);
@@ -154,14 +146,16 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 }
 
 /* horizontal rule <hr> */
+
 .markdown hr {
     margin: calc(2 * var(--base-unit)) 0 calc(1.5 * var(--base-unit)) 0;
     border: none;
-    border-top: 2px solid var(--horizontal-rule-color);
+    border-top: 2px solid var(--light-green);
     max-width: 35rem; /* same as max-width of p and h1–h6 */
 }
 
 /* Lists */
+
 .markdown ul,
 .markdown ol {
     margin: var(--base-unit) 0;
@@ -201,8 +195,6 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: flex-start;
-
-
 }
 
 .bilderreihe > * {
@@ -219,8 +211,6 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 .bilderreihe.klein figure img {
     height: var(--bilderreihe-klein-image-height);
 }
-
-
 
 /* tables */
 
@@ -269,6 +259,7 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 }
 
 /* left- and rightmost padding */
+
 .markdown th:first-child,
 .markdown td:first-child {
     padding-left: calc(0.25 * var(--base-unit));
@@ -279,11 +270,7 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
     padding-right: calc(0.25 * var(--base-unit));
 }
 
-
-
 /* SPECIAL ELEMENTS */
-
-
 
 /* Special tables */
 
@@ -313,14 +300,12 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 
 
 
-
-
 /* #mainHeader */
 
 #mainHeader {
     height: calc(7 * var(--base-unit));
     background-image: url("../static/header.jpg");
-    background-color: var(--gruen3);
+    background-color: var(--darker-green);
     background-size: cover;
     display: flex;
     align-items: center;
@@ -424,14 +409,12 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
         z-index: 1500;
     }
     #navigation .first::after {
-        background-color: var(--nav-1-color);
+        background-color: var(--dark-green);
     }
     #navigation .second::after {
-        background-color: var(--nav-2-color);
+        background-color: var(--light-green);
     }
 }
-
-
 
 /* child elements li, a */
 
@@ -454,11 +437,11 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 /* background colors */
 
 #navigation .first {
-    background-color: var(--nav-1-color);
+    background-color: var(--dark-green);
 }
 
 #navigation .second {
-    background-color: var(--nav-2-color);
+    background-color: var(--light-green);
 }
 
 /* Set :hover/.current/.current-section background colors. */
@@ -466,17 +449,16 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 #navigation li > a:hover {
     color: var(--body-text-color);
     text-decoration: underline;
-    background-color: var(--nav-highlight);
+    background-color: var(--light-green-highlight);
 }
 
 #navigation a.current-section {
-    background-color: var(--nav-highlight-section);
+    background-color: var(--dark-green-highlight);
 }
 
 #navigation a.current {
-    background-color: var(--nav-highlight);
+    background-color: var(--light-green-highlight);
 }
-
 
 
 
@@ -517,6 +499,6 @@ a.floatingButton {
 }
 
 .floatingButton:hover {
-    background-color: var(--nav-2-color);
+    background-color: var(--light-green);
     color: var(--body-text-color);
 }

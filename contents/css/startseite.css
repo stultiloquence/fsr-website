@@ -122,7 +122,7 @@ main,
     box-sizing: border-box;
     border-radius: calc(0.5 * var(--base-unit));
 
-    background-color: var(--nav-2-color);
+    background-color: var(--light-green);
     color: var(--body-text-color);
     text-decoration: none;
 
@@ -146,7 +146,7 @@ main,
 }
 
 #schnellzugriff ul a:hover {
-    background-color: var(--nav-highlight);
+    background-color: var(--light-green-highlight);
     color: var(--body-text-color);
 }
 
@@ -260,19 +260,19 @@ main,
     word-break: break-all;
     margin: calc(0.1 * var(--base-unit));
     padding: calc(0.1 * var(--base-unit));
-    background-color: var(--nav-level-2-color);
+    background-color: var(--light-green);
     border-radius: calc(0.2 * var(--base-unit));
     max-height: calc(2 * var(--base-unit));
     text-decoration: underline;
 }
 
 #terminkalender td a.terminKlein.ausgewaehlt {
-    background-color: var(--nav-level-2-highlight);
+    background-color: var(--light-green-highlight);
 }
 
 #terminkalender td a.terminKlein:hover {
     cursor: pointer;
-    background-color: var(--nav-level-2-highlight);
+    background-color: var(--light-green-highlight);
     text-decoration-thickness: 2px;
     
 }

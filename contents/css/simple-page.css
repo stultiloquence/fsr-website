@@ -26,7 +26,7 @@ main.markdown .scroll-container {
 #content h6::before {
     display: block; 
     content: " "; 
-    margin-top: calc(-5 * var(--base-unit)); /* 5 --base-units is always more than the height of the navigation (which is either 2 or 4). */
+    margin-top: calc(-6 * var(--base-unit)); /* 6 --base-units is always more than the height of the navigation (which is either 2 or 4 or 6). */
     height: calc(5 * var(--base-unit)); 
     visibility: hidden;
     pointer-events: none;
@@ -35,5 +35,5 @@ main.markdown .scroll-container {
 #content h1:target,
 #content h2:target,
 #content h3:target {
-    color: var(--nav-level-1-color);
+    color: var(--dark-green);
 }
