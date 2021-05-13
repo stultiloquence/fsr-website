@@ -17,7 +17,7 @@ html(lang= page.metadata.language || defaultLanguage)
         h1: a(href= env.helpers.relPath(page, contents['index.json'].filename)) Fachschaft Mathematik HU Berlin
 
       nav#navigation
-        ol.firstLevelNav
+        ol.nav.first
           li
             a(
               href= env.helpers.relPath(page, contents['index.json'].filename)
@@ -33,21 +33,6 @@ html(lang= page.metadata.language || defaultLanguage)
                   class= page === sectionIndex ? 'current' : ''
                   class= env.helpers.isAncestor(sectionIndex, page) ? 'current-section' : ''
                 )= sectionIndex.title
-                if env.helpers.hasSubsections(section)
-                  ol.secondLevelNav
-                    each subsection in env.helpers.getSubsections(page, section)
-                      - let subsectionIndex = env.helpers.getIndex(page, subsection)
-                      if subsectionIndex
-                        li
-                          a(
-                            href= env.helpers.relPath(page, subsectionIndex.filename)
-                            class= page === subsectionIndex ? 'current' : ''
-                          )= subsectionIndex.title
-                    - let additionalLevel2Entries = sectionIndex.metadata.additionalNavEntries || []
-                    each entry in additionalLevel2Entries
-                      li: a(
-                        href= entry.url
-                      )= entry.title
           - let additionalLevel1Entries = contents['index.json'].metadata.additionalNavEntries || []
           each entry in additionalLevel1Entries
             li: a(
@@ -57,7 +42,7 @@ html(lang= page.metadata.language || defaultLanguage)
         if ancestors.length >= 2 /* i. e. we are not on the start page */
           - let section = ancestors[1];
           - let sectionIndex = env.helpers.getIndex(page, section);
-          ol.noHoverSecondLevel
+          ol.nav.second
             each subsection in env.helpers.getSubsections(page, section)
               - let subsectionIndex = env.helpers.getIndex(page, subsection)
               if subsectionIndex

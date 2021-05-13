@@ -379,75 +379,27 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
     list-style-type: none;
 }
 
-/* make .secondLevelNav pop up on hovering over firstLevelNav, don't show .noHoverSecondLevel */
+/* flex stuff */
 
-@media (hover: hover) and (min-width: 30rem) {
-    #navigation .firstLevelNav,
-    #navigation .noHoverSecondLevel {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-    }
-
-    #navigation .firstLevelNav > li {
-        position: relative;
-    }
-
-    #navigation .secondLevelNav {
-        display: none;
-
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 1000;
-
-        flex-wrap: nowrap;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-    }
-
-    /* Selects the 5th, 6th, 7th, … Element */
-    #navigation li:nth-child(n+5) > .secondLevelNav {
-        left: unset;
-        right: 0;
-    }
-
-    #navigation .firstLevelNav > li:hover > .secondLevelNav {
-        display: flex;
-    }
-
-    /*#navigation .noHoverSecondLevel {
-        display: none;
-    }*/
+#navigation .nav {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-@media (hover: none) or (max-width: 30rem) {
-    #navigation .secondLevelNav {
-        display: none;
-    }
-
-    #navigation .firstLevelNav,
-    #navigation .noHoverSecondLevel {
-        display: flex;
+/* If the page is too slim, switch to nowrap with scrolling. The ::before pseudo-elements are arrows indicating scrollable content, the ::after elements cover them when one reaches the end. Not super clean but whatever. */
+@media (max-width: 30rem) {
+    #navigation .nav {
         flex-wrap: nowrap;
-        flex-direction: row;
-        align-items: flex-start;
         justify-content: flex-start;
-
         overflow-x: auto;
         overflow-y: hidden;
     }
-}
 
-@media (max-width: 30rem) {
-    /* The ::before pseudo-elements are arrows indicating scrollable content, the ::after elements cover them when one reaches the end. Not super clean but whatever. */
-    #navigation .firstLevelNav::before,
-    #navigation .noHoverSecondLevel::before {
+    #navigation .nav::before {
         position: absolute;
-        top: 0;
         right: 0;
         content: "⯈";
         height: calc(var(--base-unit));
@@ -457,20 +409,24 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 
         background-color: #fffb;
     }
-    #navigation .noHoverSecondLevel::before {
+    #navigation .first::before {
+        top: 0;
+    }
+    #navigation .second::before {
         top: calc(2 * var(--base-unit));
     }
 
-    #navigation .firstLevelNav::after,
-    #navigation .noHoverSecondLevel::after {
+    #navigation .nav::after {
         content: "";
         width: var(--base-unit);
         height: calc(2 * var(--base-unit));
         flex-shrink: 0;
         z-index: 1500;
+    }
+    #navigation .first::after {
         background-color: var(--nav-1-color);
     }
-    #navigation .noHoverSecondLevel::after {
+    #navigation .second::after {
         background-color: var(--nav-2-color);
     }
 }
@@ -479,12 +435,12 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 
 /* child elements li, a */
 
-#navigation li {
+#navigation .nav > li {
     display: block;
     text-align: left;
 }
 
-#navigation li > a {
+#navigation .nav > li > a {
     display: block;
     width: 100%;
     padding: calc(0.5 * var(--base-unit));
@@ -497,12 +453,11 @@ Styling for all html that is generated from markdown. Styles headings, paragraph
 
 /* background colors */
 
-#navigation .firstLevelNav {
+#navigation .first {
     background-color: var(--nav-1-color);
 }
 
-#navigation .secondLevelNav,
-#navigation .noHoverSecondLevel {
+#navigation .second {
     background-color: var(--nav-2-color);
 }
 
