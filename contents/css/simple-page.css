@@ -27,7 +27,7 @@ main.markdown .scroll-container {
     display: block; 
     content: " "; 
     margin-top: calc(-6 * var(--base-unit)); /* 6 --base-units is always more than the height of the navigation (which is either 2 or 4 or 6). */
-    height: calc(5 * var(--base-unit)); 
+    height: calc(6 * var(--base-unit)); 
     visibility: hidden;
     pointer-events: none;
 }
